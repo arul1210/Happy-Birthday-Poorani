@@ -259,7 +259,9 @@ a, button { font-family: inherit; }
 /* ============ EMOJI-REVEAL CARD FACES (quote-card + joke-card) ============ */
 .card-face--emoji {
   font-size: 2.3rem;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  display: block;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 1;
 }
 
 .card-face--text {
@@ -268,25 +270,33 @@ a, button { font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1.25rem;
   font-size: 0.95rem;
   color: var(--parchment);
-  text-align: left;
+  text-align: center;
   opacity: 0;
-  transform: scale(0.92);
-  pointer-events: none;
+  transform: scale(0.95);
   transition: opacity 0.25s ease, transform 0.25s ease;
+  background: #311F34; 
+  z-index: 2; /* Forces the text view above everything else */
+  pointer-events: none;
 }
 
+.joke-card .card-face--text {
+  background: var(--ink-deep);
+}
+
+/* HOVER EFFECT */
 .quote-card:hover .card-face--emoji,
 .joke-card:hover .card-face--emoji {
-  transform: scale(1.12);
+  transform: scale(1.1);
 }
 
+/* REVEALED ACTIVE STATES */
 .quote-card.is-revealed .card-face--emoji,
 .joke-card.is-revealed .card-face--emoji {
   opacity: 0;
-  transform: scale(0.6);
+  transform: scale(0.7);
 }
 
 .quote-card.is-revealed .card-face--text,
@@ -295,7 +305,6 @@ a, button { font-family: inherit; }
   transform: scale(1);
   pointer-events: auto;
 }
-
 /* ============ COUNTDOWN ============ */
 .countdown {
   background: var(--ink-deep);
