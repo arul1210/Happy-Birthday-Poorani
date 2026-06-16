@@ -9,28 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body class="is-locked">
-
-  <!-- ================= PASSWORD LOCK SCREEN ================= -->
-  <div class="lock-screen" id="lock-screen">
-    <form class="lock-card" id="lock-form" autocomplete="off">
-      <p class="eyebrow">$ ssh poorani@birthday-2026</p>
-      <h1 class="lock-title">This one's just for you.</h1>
-      <p class="lock-sub">Enter the password to continue.</p>
-      <input
-        class="lock-input"
-        id="lock-input"
-        type="password"
-        placeholder="Password"
-        aria-label="Password"
-        required
-      >
-      <button class="lock-submit" type="submit">Unlock 🔓</button>
-      <p class="lock-error" id="lock-error" hidden>Access denied — wrong password. Try again.</p>
-    </form>
-  </div>
-
-  <main class="site-main" id="site-main" aria-hidden="true">
+<body>
 
   <!-- ================= HERO : FATHER'S BIRTHDAY TRIBUTE ================= -->
   <section class="hero" id="hero">
@@ -57,36 +36,35 @@
         taught her to.
       </p>
 
-      <p class="reveal-hint">Tap an emoji to reveal what it's hiding 👇</p>
       <div class="quote-grid">
-        <button class="quote-card" type="button" aria-expanded="false">
-          <span class="card-face card-face--emoji" aria-hidden="true">🫂</span>
-          <span class="card-face card-face--text">
-            Being an only child never meant being alone — it meant being
-            loved without ever needing to share it.
-          </span>
-        </button>
-        <button class="quote-card" type="button" aria-expanded="false">
-          <span class="card-face card-face--emoji" aria-hidden="true">👨‍👧</span>
-          <span class="card-face card-face--text">
-            His biggest project was never code. It was you. And it shipped
-            without a single bug.
-          </span>
-        </button>
-        <button class="quote-card" type="button" aria-expanded="false">
-          <span class="card-face card-face--emoji" aria-hidden="true">🕊️</span>
-          <span class="card-face card-face--text">
-            He may not be here to say it out loud, but somewhere, he's
-            still saying — <em>"that's my girl."</em>
-          </span>
-        </button>
-        <button class="quote-card" type="button" aria-expanded="false">
-          <span class="card-face card-face--emoji" aria-hidden="true">🤍</span>
-          <span class="card-face card-face--text">
-            You don't have to choose between missing him and celebrating
-            you. Today, you're allowed to do both, gently.
-          </span>
-        </button>
+        <div class="quote-card" role="button" aria-expanded="false" tabindex="0">
+          <span class="card-face--emoji">✨</span>
+          <blockquote class="card-face--text">
+            "Being an only child never meant being alone — it meant being loved
+            without ever needing to share it."
+          </blockquote>
+        </div>
+        <div class="quote-card" role="button" aria-expanded="false" tabindex="0">
+          <span class="card-face--emoji">💻</span>
+          <blockquote class="card-face--text">
+            "His biggest project was never code. It was you. And it shipped
+            without a single bug."
+          </blockquote>
+        </div>
+        <div class="quote-card" role="button" aria-expanded="false" tabindex="0">
+          <span class="card-face--emoji">🕊️</span>
+          <blockquote class="card-face--text">
+            "He may not be here to say it out loud, but somewhere, he's still
+            saying — 'that's my girl.'"
+          </blockquote>
+        </div>
+        <div class="quote-card" role="button" aria-expanded="false" tabindex="0">
+          <span class="card-face--emoji">💛</span>
+          <blockquote class="card-face--text">
+            "You don't have to choose between missing him and celebrating
+            you. Today, you're allowed to do both, gently."
+          </blockquote>
+        </div>
       </div>
     </div>
   </section>
@@ -95,7 +73,7 @@
   <section class="countdown" id="countdown">
     <div class="section-inner">
       <p class="eyebrow">$ ./celebrate-poorani.sh</p>
-      <p class="build-status" id="build-status">Build status: pending — waiting for June 17, 12:00 AM</p>
+      <p class="build-status" id="build-status">Build status: pending — waiting for launch window</p>
 
       <div class="countdown-grid" role="timer" aria-live="polite" aria-atomic="true">
         <div class="countdown-unit">
@@ -126,32 +104,31 @@
       <p class="eyebrow eyebrow--dark">// known issues: none found</p>
       <h2 class="section-title">A few things only a developer would understand</h2>
 
-      <p class="reveal-hint">Tap an emoji to reveal what it's hiding 👇</p>
       <div class="joke-grid">
-        <button class="joke-card" type="button" aria-expanded="false">
-          <span class="card-face card-face--emoji" aria-hidden="true">☕</span>
-          <span class="card-face card-face--text joke-comment">// She turns coffee into commits and Mondays into deploy days.</span>
-        </button>
-        <button class="joke-card" type="button" aria-expanded="false">
-          <span class="card-face card-face--emoji" aria-hidden="true">🔎</span>
-          <span class="card-face card-face--text joke-comment">// 404: bad birthday not found. She wouldn't allow it.</span>
-        </button>
-        <button class="joke-card" type="button" aria-expanded="false">
-          <span class="card-face card-face--emoji" aria-hidden="true">🐛</span>
-          <span class="card-face card-face--text joke-comment">// Her code has fewer bugs than most people's excuses for being late.</span>
-        </button>
-        <button class="joke-card" type="button" aria-expanded="false">
-          <span class="card-face card-face--emoji" aria-hidden="true">✅</span>
-          <span class="card-face card-face--text joke-comment">// If kindness were a function, she'd have called it a thousand times today — zero errors.</span>
-        </button>
-        <button class="joke-card" type="button" aria-expanded="false">
-          <span class="card-face card-face--emoji" aria-hidden="true">🧠</span>
-          <span class="card-face card-face--text joke-comment">// Some people need version control. She just remembers everything anyway.</span>
-        </button>
-        <button class="joke-card" type="button" aria-expanded="false">
-          <span class="card-face card-face--emoji" aria-hidden="true">🔀</span>
-          <span class="card-face card-face--text joke-comment">// Proof that you can have zero merge conflicts — in your code AND your life.</span>
-        </button>
+        <div class="joke-card" role="button" aria-expanded="false" tabindex="0">
+          <span class="card-face--emoji">☕</span>
+          <div class="card-face--text"><span class="joke-comment">// She turns coffee into commits and Mondays into deploy days.</span></div>
+        </div>
+        <div class="joke-card" role="button" aria-expanded="false" tabindex="0">
+          <span class="card-face--emoji">🔍</span>
+          <div class="card-face--text"><span class="joke-comment">// 404: bad birthday not found. She wouldn't allow it.</span></div>
+        </div>
+        <div class="joke-card" role="button" aria-expanded="false" tabindex="0">
+          <span class="card-face--emoji">🐛</span>
+          <div class="card-face--text"><span class="joke-comment">// Her code has fewer bugs than most people's excuses for being late.</span></div>
+        </div>
+        <div class="joke-card" role="button" aria-expanded="false" tabindex="0">
+          <span class="card-face--emoji">⚡</span>
+          <div class="card-face--text"><span class="joke-comment">// If kindness were a function, she'd have called it a thousand times today — zero errors.</span></div>
+        </div>
+        <div class="joke-card" role="button" aria-expanded="false" tabindex="0">
+          <span class="card-face--emoji">🧠</span>
+          <div class="card-face--text"><span class="joke-comment">// Some people need version control. She just remembers everything anyway.</span></div>
+        </div>
+        <div class="joke-card" role="button" aria-expanded="false" tabindex="0">
+          <span class="card-face--emoji">🤝</span>
+          <div class="card-face--text"><span class="joke-comment">// Proof that you can have zero merge conflicts — in your code AND your life.</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -162,24 +139,22 @@
       <p class="eyebrow">$ run celebration</p>
       <h2 class="celebrate-title">Ready when you are.</h2>
       <button class="celebrate-btn" id="celebrate-btn">🎉 Celebrate Now</button>
-      <p class="celebrate-hint">It unlocks the moment June 17th begins.</p>
+      <p class="celebrate-hint">It unlocks when the build parameters complete.</p>
     </div>
   </section>
-
-  </main>
 
   <!-- ================= LOCKED MODAL ================= -->
   <div class="locked-modal" id="locked-modal" hidden role="dialog" aria-modal="true" aria-labelledby="locked-title">
     <div class="locked-card">
       <p class="locked-emoji">🕛</p>
       <h3 class="locked-title" id="locked-title">Hold on — even her happiness has a release schedule.</h3>
-      <p class="locked-text">Come back at midnight. Time remaining:</p>
+      <p class="locked-text">Deploy parameters pending. Time remaining:</p>
       <p class="locked-countdown" id="locked-countdown">--</p>
       <button class="locked-close" id="locked-close">Okay, I'll wait</button>
     </div>
   </div>
 
-  <!-- ================= CELEBRATION OVERLAY (unlocks after midnight) ================= -->
+  <!-- ================= CELEBRATION OVERLAY (unlocks after deadline) ================= -->
   <div class="celebration-overlay" id="celebration-overlay" hidden>
     <div class="confetti-container" id="confetti-container" aria-hidden="true"></div>
     <button class="overlay-close" id="overlay-close" aria-label="Close">✕</button>
