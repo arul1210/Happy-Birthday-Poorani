@@ -73,10 +73,12 @@ a, button { font-family: inherit; }
   text-align: center;
   position: relative;
   background:
-    linear-gradient(180deg, rgba(28,16,32,0.55) 0%, rgba(28,16,32,0.85) 70%, var(--ink) 100%),
+    linear-gradient(180deg, rgba(28,16,32,0.6) 0%, rgba(28,16,32,0.85) 70%, var(--ink) 100%),
     url('assets/background.jpeg');
+  /* FIXES ZOOM: Uses 'contain' on mobile or adjusted 'cover' aspect controls */
   background-size: cover;
-  background-position: center;
+  background-position: center 15%; /* Points focus higher up where faces are positioned */
+  background-repeat: no-repeat;
 }
 
 .hero-inner {
@@ -126,8 +128,17 @@ a, button { font-family: inherit; }
     linear-gradient(180deg, rgba(28,16,32,0.7) 0%, rgba(28,16,32,0.92) 100%),
     url('assets/background.jpeg');
   background-size: cover;
-  background-position: center;
+  background-position: center 15%;
+  background-repeat: no-repeat;
   transition: opacity 0.4s ease;
+}
+/* Desktop optimization to prevent massive cropping stretching */
+@media (min-width: 1024px) {
+  .hero, .lock-screen {
+    background-size: contain;
+    background-position: center top;
+    background-color: var(--ink-deep); /* Fills any remaining side space gracefully */
+  }
 }
 
 .lock-screen.is-unlocking { opacity: 0; }
