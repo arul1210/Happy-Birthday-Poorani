@@ -26,11 +26,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-body.is-locked {
-  overflow: hidden;
-  height: 100vh;
-}
-
 a, button { font-family: inherit; }
 
 :focus-visible {
@@ -64,7 +59,7 @@ a, button { font-family: inherit; }
   margin: 0 0 2.5rem;
 }
 
-/* ============ HERO ============ */
+/* ============ HERO (ZOOM OUT & FACE FOCUS FIXED) ============ */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -73,17 +68,26 @@ a, button { font-family: inherit; }
   text-align: center;
   position: relative;
   background:
-    linear-gradient(180deg, rgba(28,16,32,0.6) 0%, rgba(28,16,32,0.85) 70%, var(--ink) 100%),
-    url('assets/background.jpeg');
-  /* FIXES ZOOM: Uses 'contain' on mobile or adjusted 'cover' aspect controls */
+    linear-gradient(180deg, rgba(28,16,32,0.65) 0%, rgba(28,16,32,0.85) 70%, var(--ink) 100%),
+    url('assets/background.jpg');
   background-size: cover;
-  background-position: center 15%; /* Points focus higher up where faces are positioned */
+  background-position: center 18%; /* Focus adjustments target the faces higher up */
   background-repeat: no-repeat;
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    background-size: contain;
+    background-position: center top;
+    background-color: var(--ink-deep); /* Gracefully handles ultra-wide spacing */
+  }
 }
 
 .hero-inner {
   max-width: 640px;
   padding: 2rem 1.5rem;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-title {
@@ -115,104 +119,6 @@ a, button { font-family: inherit; }
   50% { transform: translateY(8px); }
 }
 
-/* ============ LOCK SCREEN ============ */
-.lock-screen {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  background:
-    linear-gradient(180deg, rgba(28,16,32,0.7) 0%, rgba(28,16,32,0.92) 100%),
-    url('assets/background.jpeg');
-  background-size: cover;
-  background-position: center 15%;
-  background-repeat: no-repeat;
-  transition: opacity 0.4s ease;
-}
-/* Desktop optimization to prevent massive cropping stretching */
-@media (min-width: 1024px) {
-  .hero, .lock-screen {
-    background-size: contain;
-    background-position: center top;
-    background-color: var(--ink-deep); /* Fills any remaining side space gracefully */
-  }
-}
-
-.lock-screen.is-unlocking { opacity: 0; }
-
-.lock-card {
-  background: rgba(28,16,32,0.9);
-  border: 1px solid rgba(232,162,61,0.3);
-  border-radius: 14px;
-  max-width: 400px;
-  width: 100%;
-  padding: 2.5rem 2rem;
-  text-align: center;
-}
-
-.lock-card.shake { animation: shake 0.4s ease; }
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-8px); }
-  40% { transform: translateX(8px); }
-  60% { transform: translateX(-6px); }
-  80% { transform: translateX(6px); }
-}
-
-.lock-title {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.5rem;
-  margin: 0 0 0.5rem;
-}
-
-.lock-sub {
-  font-size: 0.95rem;
-  color: rgba(246,238,226,0.7);
-  margin: 0 0 1.5rem;
-}
-
-.lock-input {
-  width: 100%;
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  background: rgba(246,238,226,0.06);
-  border: 1px solid rgba(246,238,226,0.25);
-  border-radius: 8px;
-  color: var(--parchment);
-  padding: 0.85rem 1rem;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.lock-input::placeholder { color: rgba(246,238,226,0.4); }
-
-.lock-submit {
-  width: 100%;
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 1rem;
-  color: var(--ink-deep);
-  background: linear-gradient(135deg, var(--marigold), var(--ember));
-  border: none;
-  border-radius: 999px;
-  padding: 0.85rem 1.5rem;
-  cursor: pointer;
-}
-
-.lock-submit:hover { filter: brightness(1.05); }
-
-.lock-error {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--ember);
-  margin: 1rem 0 0;
-}
-
 /* ============ REMEMBRANCE ============ */
 .remembrance { background: var(--ink); }
 
@@ -231,32 +137,7 @@ a, button { font-family: inherit; }
   gap: 1.25rem;
 }
 
-.reveal-hint {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: rgba(246,238,226,0.5);
-  margin: 0 0 1.25rem;
-}
-
-.quote-card {
-  position: relative;
-  margin: 0;
-  background: rgba(246,238,226,0.05);
-  border: none;
-  border-left: 3px solid var(--ember);
-  padding: 1.5rem;
-  min-height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font: inherit;
-  text-align: left;
-  color: inherit;
-  cursor: pointer;
-  overflow: hidden;
-}
-
-/* ============ EMOJI-REVEAL CARD FACES (quote-card + joke-card) ============ */
+/* ============ INTERACTIVE REVEAL CORE CARDS FIXED ============ */
 .quote-card, .joke-card {
   position: relative;
   overflow: hidden;
@@ -264,16 +145,32 @@ a, button { font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 120px;
+  min-height: 140px;
   width: 100%;
+  margin: 0;
+  background: rgba(246,238,226,0.05);
+  border: 1px solid rgba(246,238,226,0.1);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.quote-card {
+  border-left: 3px solid var(--ember);
+}
+
+.joke-card {
+  background: var(--ink-deep);
+  border: 1px solid rgba(62,122,115,0.4);
 }
 
 .card-face--emoji {
-  font-size: 2.3rem;
+  font-size: 2.5rem;
   opacity: 1;
   transform: scale(1);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  z-index: 1;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .card-face--text {
@@ -283,45 +180,46 @@ a, button { font-family: inherit; }
   align-items: center;
   justify-content: center;
   padding: 1.25rem;
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   color: var(--parchment);
   text-align: center;
   opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  z-index: 2;
+  transform: scale(0.92);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 1;
   pointer-events: none;
-  
-  /* CRITICAL FIX: Gives the text a solid background color so it replaces the emoji */
-  background: #2B1B2E; 
+  margin: 0;
 }
 
-/* Match the darker section background for the joke cards */
+.quote-card .card-face--text {
+  background: #332137; 
+}
+
 .joke-card .card-face--text {
-  background: #1C1020; 
+  background: #150B18;
 }
 
-/* HOVER EFFECTS */
-.quote-card:hover .card-face--emoji,
-.joke-card:hover .card-face--emoji {
-  transform: scale(1.1);
+/* Hover scales the emoji card wrapper */
+.quote-card:hover, .joke-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--marigold);
 }
 
-/* ===================================================
-   ACTIVE / REVEALED STATES (TRIGGERED BY JAVASCRIPT)
-   =================================================== */
+/* JavaScript Revealed Open States */
 .quote-card.is-revealed .card-face--emoji,
 .joke-card.is-revealed .card-face--emoji {
   opacity: 0;
-  transform: scale(0.7);
+  transform: scale(0.6);
 }
 
 .quote-card.is-revealed .card-face--text,
 .joke-card.is-revealed .card-face--text {
   opacity: 1;
   transform: scale(1);
+  z-index: 3;
   pointer-events: auto;
 }
+
 /* ============ COUNTDOWN ============ */
 .countdown {
   background: var(--ink-deep);
@@ -385,27 +283,6 @@ body.is-unlocked .countdown-unit { border-color: var(--marigold); }
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-}
-
-.joke-card {
-  position: relative;
-  background: var(--ink-deep);
-  border: 1px solid rgba(62,122,115,0.4);
-  border-radius: 8px;
-  padding: 1.25rem;
-  min-height: 110px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font: inherit;
-  text-align: left;
-  color: inherit;
-  cursor: pointer;
-  overflow: hidden;
-}
-
-.joke-card .card-face--text {
-  padding: 1.25rem;
 }
 
 .joke-comment {
