@@ -1,70 +1,7 @@
 (function () {
   'use strict';
 
-  // ---- Password gate ----
-  var SITE_PASSWORD = 'Buddy';
-
-  var lockScreen = document.getElementById('lock-screen');
-  var lockForm = document.getElementById('lock-form');
-  var lockInput = document.getElementById('lock-input');
-  var lockError = document.getElementById('lock-error');
-  var siteMain = document.getElementById('site-main');
-
-  function unlockSiteAccess(skipAnimation) {
-    document.body.classList.remove('is-locked');
-    if (siteMain) siteMain.removeAttribute('aria-hidden');
-
-    if (lockScreen) {
-      if (skipAnimation) {
-        lockScreen.hidden = true;
-      } else {
-        lockScreen.classList.add('is-unlocking');
-        setTimeout(function () {
-          lockScreen.hidden = true;
-        }, 400);
-      }
-    }
-
-    try {
-      sessionStorage.setItem('poorani-site-unlocked', 'true');
-    } catch (e) {
-      // sessionStorage unavailable
-    }
-  }
-
-  try {
-    if (sessionStorage.getItem('poorani-site-unlocked') === 'true') {
-      unlockSiteAccess(true);
-    }
-  } catch (e) {
-    // ignore
-  }
-
-  if (lockForm) {
-    lockForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var entered = (lockInput ? lockInput.value : '').trim().toLowerCase();
-
-      if (entered === SITE_PASSWORD.trim().toLowerCase()) {
-        unlockSiteAccess(false);
-      } else {
-        if (lockError) lockError.hidden = false;
-        if (lockInput) {
-          lockInput.value = '';
-          lockInput.focus();
-        }
-        var card = document.querySelector('.lock-card');
-        if (card) {
-          card.classList.add('shake');
-          setTimeout(function () {
-            card.classList.remove('shake');
-          }, 400);
-        }
-      }
-    });
-  }
-
-  // ---- Target unlock moment UPDATED: June 16, 2026, 08:00 PM IST ----
+  // ---- Target unlock moment: Updated to June 16, 2026, 08:00 PM IST ----
   var TARGET_TIME = new Date('2026-06-16T20:00:00+05:30').getTime();
   var unlocked = false;
 
@@ -140,15 +77,11 @@
   }
 
   // ---- Confetti ----
-  var confettiInterval = null;
   function launchConfetti() {
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion || !els.confettiContainer) return;
 
     var colors = ['#E8A23D', '#E3B7C0', '#C75D3B', '#F6EEE2', '#3E7A73'];
-
-    if (confettiInterval) clearInterval(confettiInterval);
-    els.confettiContainer.innerHTML = '';
 
     for (var i = 0; i < 70; i++) {
       var piece = document.createElement('span');
@@ -159,6 +92,10 @@
       piece.style.animationDuration = 2.5 + Math.random() * 1.5 + 's';
       els.confettiContainer.appendChild(piece);
     }
+
+    setTimeout(function () {
+      els.confettiContainer.innerHTML = '';
+    }, 4500);
   }
 
   // ---- Celebration overlay ----
@@ -173,7 +110,7 @@
     if (els.audio) {
       els.audio.currentTime = 0;
       els.audio.play().catch(function () {
-        // Autoplay fallback handler
+        // Fail silently if autoplay is blocked
       });
     }
   }
@@ -184,7 +121,6 @@
     if (els.audio) els.audio.pause();
     setTimeout(function () {
       els.overlay.hidden = true;
-      if (els.confettiContainer) els.confettiContainer.innerHTML = '';
     }, 300);
   }
 
@@ -201,12 +137,20 @@
   if (els.lockedClose) els.lockedClose.addEventListener('click', closeLockedModal);
   if (els.overlayClose) els.overlayClose.addEventListener('click', closeCelebration);
 
-  // ---- Emoji-reveal quote & joke cards ----
-  var revealCards = document.querySelectorAll('.quote-card, .joke-card');
-  for (var i = 0; i < revealCards.length; i++) {
-    revealCards[i].addEventListener('click', function () {
-      var isRevealed = this.classList.toggle('is-revealed');
-      this.setAttribute('aria-expanded', isRevealed ? 'true' : 'false');
+  // ---- Emoji Card Interactive Toggle ----
+  var cards = document.querySelectorAll('.quote-card, .joke-card');
+  cards.forEach(function (card) {
+    card.addEventListener('click', function () {
+      var revealed = card.classList.toggle('is-revealed');
+      card.setAttribute('aria-expanded', revealed ? 'true' : 'false');
     });
-  }
+    
+    // Accessibility fallback for keyboard navigation
+    card.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        card.click();
+      }
+    });
+  });
 })();
