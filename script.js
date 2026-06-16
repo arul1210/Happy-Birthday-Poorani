@@ -2,7 +2,6 @@
   'use strict';
 
   // ---- Password gate ----
-  // Change this to whatever password you want her to enter.
   var SITE_PASSWORD = 'Buddy';
 
   var lockScreen = document.getElementById('lock-screen');
@@ -29,7 +28,7 @@
     try {
       sessionStorage.setItem('poorani-site-unlocked', 'true');
     } catch (e) {
-      // sessionStorage unavailable — she'll just re-enter the password next visit.
+      // sessionStorage unavailable
     }
   }
 
@@ -65,8 +64,8 @@
     });
   }
 
-  // ---- Target unlock moment: June 17, 2026, 12:00 AM IST ----
-  var TARGET_TIME = new Date('2026-06-16T:20:00+05:30').getTime();
+  // ---- Target unlock moment UPDATED: June 16, 2026, 08:00 PM IST ----
+  var TARGET_TIME = new Date('2026-06-16T20:00:00+05:30').getTime();
   var unlocked = false;
 
   var els = {
@@ -141,11 +140,15 @@
   }
 
   // ---- Confetti ----
+  var confettiInterval = null;
   function launchConfetti() {
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion || !els.confettiContainer) return;
 
     var colors = ['#E8A23D', '#E3B7C0', '#C75D3B', '#F6EEE2', '#3E7A73'];
+
+    if (confettiInterval) clearInterval(confettiInterval);
+    els.confettiContainer.innerHTML = '';
 
     for (var i = 0; i < 70; i++) {
       var piece = document.createElement('span');
@@ -156,10 +159,6 @@
       piece.style.animationDuration = 2.5 + Math.random() * 1.5 + 's';
       els.confettiContainer.appendChild(piece);
     }
-
-    setTimeout(function () {
-      els.confettiContainer.innerHTML = '';
-    }, 4500);
   }
 
   // ---- Celebration overlay ----
@@ -174,7 +173,7 @@
     if (els.audio) {
       els.audio.currentTime = 0;
       els.audio.play().catch(function () {
-        // Autoplay blocked, or song.mp3 hasn't been added yet — fail silently.
+        // Autoplay fallback handler
       });
     }
   }
@@ -185,6 +184,7 @@
     if (els.audio) els.audio.pause();
     setTimeout(function () {
       els.overlay.hidden = true;
+      if (els.confettiContainer) els.confettiContainer.innerHTML = '';
     }, 300);
   }
 
