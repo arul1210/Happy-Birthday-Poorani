@@ -66,7 +66,7 @@
   }
 
   // ---- Target unlock moment: June 17, 2026, 12:00 AM IST ----
-  var TARGET_TIME = new Date('2026-06-17T00:00:00+05:30').getTime();
+  var TARGET_TIME = new Date('2026-06-16T:20:00+05:30').getTime();
   var unlocked = false;
 
   var els = {
